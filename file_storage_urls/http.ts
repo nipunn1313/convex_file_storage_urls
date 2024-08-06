@@ -1,16 +1,12 @@
 import { httpRouter } from "convex/server";
-import { httpAction } from "./_generated/server";
+import { serveAction } from "./serve";
 
 const http = httpRouter();
 
 http.route({
   path: "/get",
   method: "GET",
-  handler: httpAction(async (_ctx, _request) => {
-    return new Response("Image not found", {
-      status: 404,
-    });
-  }),
+  handler: serveAction,
 });
 
 export default http;

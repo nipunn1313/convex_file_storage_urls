@@ -8,6 +8,8 @@ import { api } from "../../convex/_generated/api";
 import { MessageList } from "@/Chat/MessageList";
 import { Message } from "@/Chat/Message";
 
+const convexSiteUrl = import.meta.env.VITE_CONVEX_SITE_URL;
+
 export function Chat({ viewer }: { viewer: string }) {
   const [newMessageText, setNewMessageText] = useState("");
   const messages = useQuery(api.messages.list);
@@ -24,6 +26,9 @@ export function Chat({ viewer }: { viewer: string }) {
       });
   };
 
+  const url = new URL(`${convexSiteUrl}/storage/get`);
+  url.searchParams.set("storageId", "kg2fndkmzfq97mh5j3b12nhyas6ybjky");
+
   return (
     <>
       <MessageList messages={messages}>
@@ -33,6 +38,8 @@ export function Chat({ viewer }: { viewer: string }) {
           </Message>
         ))}
       </MessageList>
+      Hi there
+      <img src={url.href} />
       <div className="border-t">
         <form onSubmit={handleSubmit} className="container flex gap-2 py-4">
           <Input

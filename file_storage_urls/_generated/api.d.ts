@@ -10,6 +10,7 @@
  */
 
 import type * as http from "../http.js";
+import type * as serve from "../serve.js";
 
 import type { ApiFromModules, FunctionReference } from "convex/server";
 /**
@@ -22,4 +23,5 @@ import type { ApiFromModules, FunctionReference } from "convex/server";
  */
 declare const functions: ApiFromModules<{
   http: typeof http;
+  serve: typeof serve;
 }>;
