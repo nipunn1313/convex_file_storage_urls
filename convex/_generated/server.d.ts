@@ -149,5 +149,15 @@ export type DatabaseReader = GenericDatabaseReader<DataModel>;
 export type DatabaseWriter = GenericDatabaseWriter<DataModel>;
 
 export declare const app: {
-  file_storage_urls: {};
+  file_storage_urls: {
+    serve: {
+      cleanup: FunctionReference<"mutation", "internal", {}, null>;
+      generateUrl: FunctionReference<
+        "mutation",
+        "internal",
+        { expiresInMillis: null | number; storageId: string },
+        string
+      >;
+    };
+  };
 };

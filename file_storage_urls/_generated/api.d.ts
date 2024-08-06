@@ -9,6 +9,7 @@
  * @module
  */
 
+import type * as crons from "../crons.js";
 import type * as http from "../http.js";
 import type * as serve from "../serve.js";
 
@@ -22,6 +23,7 @@ import type { ApiFromModules, FunctionReference } from "convex/server";
  * ```
  */
 declare const functions: ApiFromModules<{
+  crons: typeof crons;
   http: typeof http;
   serve: typeof serve;
 }>;

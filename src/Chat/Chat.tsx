@@ -27,7 +27,10 @@ export function Chat({ viewer }: { viewer: string }) {
   };
 
   const url = new URL(`${convexSiteUrl}/storage/get`);
-  url.searchParams.set("storageId", "kg2fndkmzfq97mh5j3b12nhyas6ybjky");
+  //url.searchParams.set("storageId", "kg2b2rnpnw2fg2naw4mx9ajwpd6yb4cg");
+  url.searchParams.set("uuid", "902c3930-acc9-42bb-d11a-6d442cc69342");
+  //const url = new URL(`${convexSiteUrl}/testouterget`);
+  //url.searchParams.set("storageId", "kg2fndkmzfq97mh5j3b12nhyas6ybjky");
 
   return (
     <>
