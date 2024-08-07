@@ -57,10 +57,15 @@ test("Cleanup", async () => {
     expiresInMillis: 100,
   });
   expect(uuid).toBeDefined();
-
   expect(await t.run(getNumUrls)).toEqual(1);
-  await t.run(functions.serve.cleanup);
 
+  // Cleanup does nothing at first
+  await t.mutation(functions.serve.cleanup);
+  expect(await t.run(getNumUrls)).toEqual(1);
+
+  // After 100ms, cleanup happens
   await new Promise((r) => setTimeout(r, 100));
   expect(await t.run(getNumUrls)).toEqual(1);
+  await t.mutation(functions.serve.cleanup);
+  expect(await t.run(getNumUrls)).toEqual(0);
 });
