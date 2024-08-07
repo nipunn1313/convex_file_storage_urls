@@ -1,4 +1,9 @@
-import { httpAction, internalQuery, mutation } from "./_generated/server";
+import {
+  httpAction,
+  internalMutation,
+  internalQuery,
+  mutation,
+} from "./_generated/server";
 import { v4 as uuidv4 } from "uuid";
 import { v } from "convex/values";
 import { functions } from "./_generated/api";
@@ -71,7 +76,7 @@ export const generateUrl = mutation({
   },
 });
 
-export const cleanup = mutation({
+export const cleanup = internalMutation({
   args: {},
   returns: v.null(),
   handler: async (ctx) => {
