@@ -1,5 +1,3 @@
 import { defineComponent } from "convex/server";
 
-export default defineComponent("fileStorageUrls", {
-  args: {},
-});
+export default defineComponent("fileStorageUrls");
