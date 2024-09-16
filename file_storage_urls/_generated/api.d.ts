@@ -13,6 +13,7 @@
 import type * as crons from "../crons.js";
 import type * as http from "../http.js";
 import type * as serve from "../serve.js";
+import type * as upload from "../upload.js";
 
 import type {
   ApiFromModules,
@@ -31,6 +32,7 @@ declare const fullApi: ApiFromModules<{
   crons: typeof crons;
   http: typeof http;
   serve: typeof serve;
+  upload: typeof upload;
 }>;
 export type Mounts = {
   serve: {
