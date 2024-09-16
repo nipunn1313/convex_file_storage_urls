@@ -12,6 +12,7 @@
 
 import {
   ActionBuilder,
+  AnyComponents,
   HttpActionBuilder,
   MutationBuilder,
   QueryBuilder,
@@ -20,8 +21,14 @@ import {
   GenericQueryCtx,
   GenericDatabaseReader,
   GenericDatabaseWriter,
+  FunctionReference,
 } from "convex/server";
 import type { DataModel } from "./dataModel.js";
+
+type GenericCtx =
+  | GenericActionCtx<DataModel>
+  | GenericMutationCtx<DataModel>
+  | GenericQueryCtx<DataModel>;
 
 /**
  * Define a query in this Convex app's public API.
@@ -142,5 +149,7 @@ export type DatabaseReader = GenericDatabaseReader<DataModel>;
  * for the guarantees Convex provides your functions.
  */
 export type DatabaseWriter = GenericDatabaseWriter<DataModel>;
+
+export declare const components: AnyComponents;
 
 /* prettier-ignore-end */
