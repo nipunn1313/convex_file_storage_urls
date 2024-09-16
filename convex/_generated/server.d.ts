@@ -150,6 +150,17 @@ export type DatabaseReader = GenericDatabaseReader<DataModel>;
  */
 export type DatabaseWriter = GenericDatabaseWriter<DataModel>;
 
-export declare const components: AnyComponents;
+export declare const components: {
+  fileStorageUrls: {
+    serve: {
+      generateUrl: FunctionReference<
+        "mutation",
+        "internal",
+        { expiresInMillis: null | number; storageId: string },
+        string
+      >;
+    };
+  };
+};
 
 /* prettier-ignore-end */
