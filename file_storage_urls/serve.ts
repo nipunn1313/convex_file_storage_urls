@@ -6,7 +6,7 @@ import {
 } from "./_generated/server";
 import { v4 as uuidv4 } from "uuid";
 import { v } from "convex/values";
-import { api } from "./_generated/api";
+import { internal } from "./_generated/api";
 
 export const serveAction = httpAction(async (ctx, request) => {
   const { searchParams } = new URL(request.url);
@@ -16,7 +16,7 @@ export const serveAction = httpAction(async (ctx, request) => {
       status: 400,
     });
   }
-  const storageId = await ctx.runQuery(api.serve.getByUuid, { uuid });
+  const storageId = await ctx.runQuery(internal.serve.getByUuid, { uuid });
   if (storageId === null) {
     // invalid UUID or expired URL
     return new Response("File Not Found", {

@@ -1,6 +1,6 @@
 import { convexTest } from "convex-test";
 import { expect, test } from "vitest";
-import { functions } from "./_generated/api";
+import { api, internal } from "./_generated/api";
 import schema from "./schema";
 import { modules } from "./test.setup";
 import { MutationCtx } from "./_generated/server";
@@ -10,7 +10,7 @@ test("Serve File", async () => {
   const storageId = await t.run(async (ctx) => {
     return await ctx.storage.store(new Blob(["HI"]));
   });
-  const uuid = await t.mutation(functions.serve.generateUrl, {
+  const uuid = await t.mutation(api.serve.generateUrl, {
     storageId,
     expiresInMillis: null,
   });
@@ -27,7 +27,7 @@ test("Serve file expires", async () => {
   const storageId = await t.run(async (ctx) => {
     return await ctx.storage.store(new Blob(["HI"]));
   });
-  const uuid = await t.mutation(functions.serve.generateUrl, {
+  const uuid = await t.mutation(api.serve.generateUrl, {
     storageId,
     expiresInMillis: 100,
   });
@@ -52,7 +52,7 @@ test("Cleanup", async () => {
   };
   expect(await t.run(getNumUrls)).toEqual(0);
 
-  const uuid = await t.mutation(functions.serve.generateUrl, {
+  const uuid = await t.mutation(api.serve.generateUrl, {
     storageId,
     expiresInMillis: 100,
   });
@@ -60,12 +60,12 @@ test("Cleanup", async () => {
   expect(await t.run(getNumUrls)).toEqual(1);
 
   // Cleanup does nothing at first
-  await t.mutation(functions.serve.cleanup);
+  await t.mutation(internal.serve.cleanup);
   expect(await t.run(getNumUrls)).toEqual(1);
 
   // After 100ms, cleanup happens
   await new Promise((r) => setTimeout(r, 100));
   expect(await t.run(getNumUrls)).toEqual(1);
-  await t.mutation(functions.serve.cleanup);
+  await t.mutation(internal.serve.cleanup);
   expect(await t.run(getNumUrls)).toEqual(0);
 });
