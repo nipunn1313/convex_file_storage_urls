@@ -156,7 +156,11 @@ export declare const components: {
       generateUrl: FunctionReference<
         "mutation",
         "internal",
-        { expiresInMillis: null | number; storageId: string },
+        {
+          convexSiteUrl: string;
+          expiresInMillis: null | number;
+          storageId: string;
+        },
         string
       >;
     };

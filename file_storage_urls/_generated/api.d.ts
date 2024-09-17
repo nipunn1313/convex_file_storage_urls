@@ -11,7 +11,6 @@
  */
 
 import type * as crons from "../crons.js";
-import type * as http from "../http.js";
 import type * as serve from "../serve.js";
 import type * as upload from "../upload.js";
 
@@ -30,7 +29,6 @@ import type {
  */
 declare const fullApi: ApiFromModules<{
   crons: typeof crons;
-  http: typeof http;
   serve: typeof serve;
   upload: typeof upload;
 }>;
@@ -39,7 +37,11 @@ export type Mounts = {
     generateUrl: FunctionReference<
       "mutation",
       "public",
-      { expiresInMillis: null | number; storageId: string },
+      {
+        convexSiteUrl: string;
+        expiresInMillis: null | number;
+        storageId: string;
+      },
       string
     >;
   };
