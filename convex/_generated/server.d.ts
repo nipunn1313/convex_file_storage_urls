@@ -171,7 +171,18 @@ export declare const components: {
       >;
     };
     upload: {
-      generateUploadUrl: FunctionReference<"mutation", "internal", {}, any>;
+      generateUploadUrl: FunctionReference<
+        "mutation",
+        "internal",
+        { convexSiteUrl: string; expiresInMillis: null | number },
+        string
+      >;
+      uploadAction: FunctionReference<
+        "action",
+        "internal",
+        { buf: ArrayBuffer; uuid: string },
+        null
+      >;
     };
   };
 };

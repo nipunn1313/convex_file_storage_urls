@@ -53,7 +53,7 @@ test("Cleanup", async () => {
   });
 
   const getNumUrls = async (ctx: MutationCtx) => {
-    const urls = await ctx.db.query("urls").collect();
+    const urls = await ctx.db.query("serveUrls").collect();
     return urls.length;
   };
   expect(await t.run(getNumUrls)).toEqual(0);

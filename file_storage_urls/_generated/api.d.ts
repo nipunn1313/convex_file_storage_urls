@@ -52,7 +52,18 @@ export type Mounts = {
     >;
   };
   upload: {
-    generateUploadUrl: FunctionReference<"mutation", "public", {}, any>;
+    generateUploadUrl: FunctionReference<
+      "mutation",
+      "public",
+      { convexSiteUrl: string; expiresInMillis: null | number },
+      string
+    >;
+    uploadAction: FunctionReference<
+      "action",
+      "public",
+      { buf: ArrayBuffer; uuid: string },
+      null
+    >;
   };
 };
 // For now fullApiWithMounts is only fullApi which provides

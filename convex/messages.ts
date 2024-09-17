@@ -48,6 +48,10 @@ export const generateUploadUrl = mutation({
   handler: async (ctx) => {
     return await ctx.runMutation(
       components.fileStorageUrls.upload.generateUploadUrl,
+      {
+        expiresInMillis: 60000,
+        convexSiteUrl: process.env.CONVEX_SITE_URL!,
+      },
     );
   },
 });

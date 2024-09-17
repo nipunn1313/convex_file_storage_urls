@@ -57,15 +57,15 @@ export const getByUuid = internalQuery({
   returns: v.union(v.null(), v.id("_storage")),
   handler: async (ctx, args) => {
     const doc = await ctx.db
-      .query("urls")
+      .query("serveUrls")
       .withIndex("by_uuid", (q) => q.eq("uuid", args.uuid))
       .unique();
     if (doc === null) {
-      console.log(`UUID ${args.uuid} is invalid`);
+      console.log(`Serve UUID ${args.uuid} is invalid`);
       return null;
     }
     if (doc.expiration && doc.expiration < Date.now()) {
-      console.log(`UUID ${args.uuid} has expired`);
+      console.log(`Serve UUID ${args.uuid} has expired`);
       return null;
     }
     return doc.storageId;
@@ -84,7 +84,7 @@ export const generateUrl = mutation({
     const expiration = args.expiresInMillis
       ? Date.now() + args.expiresInMillis
       : null;
-    await ctx.db.insert("urls", {
+    await ctx.db.insert("serveUrls", {
       uuid,
       storageId: args.storageId,
       expiration,
@@ -99,7 +99,7 @@ export const cleanup = internalMutation({
   handler: async (ctx) => {
     const now = Date.now();
     const expired = await ctx.db
-      .query("urls")
+      .query("serveUrls")
       .withIndex("by_expiration", (q) =>
         q.gt("expiration", null).lt("expiration", now),
       )
