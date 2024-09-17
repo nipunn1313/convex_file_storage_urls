@@ -10,13 +10,16 @@ test("Serve File", async () => {
   const storageId = await t.run(async (ctx) => {
     return await ctx.storage.store(new Blob(["HI"]));
   });
-  const uuid = await t.mutation(api.serve.generateUrl, {
+  const url = await t.mutation(api.serve.generateUrl, {
     storageId,
     expiresInMillis: null,
+    convexSiteUrl: "",
   });
-  expect(uuid).toBeDefined();
+  expect(url).toBeDefined();
 
-  const response = await t.fetch(`/get?uuid=${uuid}`, { method: "GET" });
+  const response = await t.fetch(url, {
+    method: "GET",
+  });
   expect(response.status).toEqual(200);
   const contents = await response.text();
   expect(contents).toEqual("HI");
@@ -27,14 +30,17 @@ test("Serve file expires", async () => {
   const storageId = await t.run(async (ctx) => {
     return await ctx.storage.store(new Blob(["HI"]));
   });
-  const uuid = await t.mutation(api.serve.generateUrl, {
+  const url = await t.mutation(api.serve.generateUrl, {
     storageId,
     expiresInMillis: 100,
+    convexSiteUrl: "",
   });
-  expect(uuid).toBeDefined();
+  expect(url).toBeDefined();
 
   await new Promise((r) => setTimeout(r, 100));
-  const response = await t.fetch(`/get?uuid=${uuid}`, { method: "GET" });
+  const response = await t.fetch(url, {
+    method: "GET",
+  });
   expect(response.status).toEqual(404);
   const contents = await response.text();
   expect(contents).toEqual("File Not Found");
@@ -52,11 +58,12 @@ test("Cleanup", async () => {
   };
   expect(await t.run(getNumUrls)).toEqual(0);
 
-  const uuid = await t.mutation(api.serve.generateUrl, {
+  const url = await t.mutation(api.serve.generateUrl, {
     storageId,
     expiresInMillis: 100,
+    convexSiteUrl: "",
   });
-  expect(uuid).toBeDefined();
+  expect(url).toBeDefined();
   expect(await t.run(getNumUrls)).toEqual(1);
 
   // Cleanup does nothing at first

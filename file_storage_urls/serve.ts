@@ -60,6 +60,7 @@ export const generateUrl = mutation({
   args: {
     storageId: v.id("_storage"),
     expiresInMillis: v.union(v.null(), v.float64()),
+    convexSiteUrl: v.string(),
   },
   returns: v.string(),
   handler: async (ctx, args) => {
@@ -72,7 +73,7 @@ export const generateUrl = mutation({
       storageId: args.storageId,
       expiration,
     });
-    return uuid;
+    return `${args.convexSiteUrl}/fileStorageUrls/get?uuid=${uuid}`;
   },
 });
 

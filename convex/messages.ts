@@ -17,6 +17,7 @@ export const getImageUrl = mutation({
       {
         expiresInMillis: 60000, // lasts a minute
         storageId: args.storageId,
+        convexSiteUrl: process.env.CONVEX_SITE_URL!,
       },
     );
     console.log(url);
