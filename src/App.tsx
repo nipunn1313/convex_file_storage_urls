@@ -1,12 +1,13 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "convex/react";
 import { api } from "../convex/_generated/api";
+import { Id } from "../convex/_generated/dataModel";
 
 export default function App() {
   const messages = useQuery(api.messages.list) || [];
 
   const [newMessageText, setNewMessageText] = useState("");
-  const sendMessage = useMutation(api.messages.sendMessage);
+  const sendMessage = useMutation(api.messages.send);
 
   const [name] = useState(() => "User " + Math.floor(Math.random() * 10000));
   async function handleSendMessage(event: FormEvent) {
@@ -92,6 +93,23 @@ export default function App() {
   );
 }
 
-function Image({ message }: { message: { url: string } }) {
-  return <img src={message.url} height="300px" width="auto" />;
+function Image({ message }: { message: { storageId: Id<"_storage"> } }) {
+  const [url, setUrl] = useState<string | null>(null);
+  const generateUrl = useMutation(api.messages.getImageUrl);
+
+  useEffect(() => {
+    const fetchUrl = async () => {
+      const generatedUrl = await generateUrl({ storageId: message.storageId });
+      setUrl(generatedUrl);
+    };
+
+    // Fetch the URL initially
+    // fetchUrl();
+  });
+
+  if (!url) {
+    return <div>Image Loading...</div>;
+  }
+
+  return <img src={url} height="300px" width="auto" />;
 }

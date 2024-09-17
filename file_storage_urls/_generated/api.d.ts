@@ -43,6 +43,9 @@ export type Mounts = {
       string
     >;
   };
+  upload: {
+    generateUploadUrl: FunctionReference<"mutation", "public", {}, any>;
+  };
 };
 // For now fullApiWithMounts is only fullApi which provides
 // jump-to-definition in component client code.

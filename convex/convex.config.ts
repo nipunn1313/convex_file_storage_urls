@@ -1,8 +1,8 @@
 import { defineApp } from "convex/server";
 import fileStorageUrls from "../file_storage_urls/convex.config";
 
-const components = defineApp();
+const app = defineApp();
 
-components.use(fileStorageUrls);
+app.use(fileStorageUrls);
 
-export default components;
+export default app;

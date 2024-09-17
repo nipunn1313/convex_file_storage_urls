@@ -160,6 +160,9 @@ export declare const components: {
         string
       >;
     };
+    upload: {
+      generateUploadUrl: FunctionReference<"mutation", "internal", {}, any>;
+    };
   };
 };
 
