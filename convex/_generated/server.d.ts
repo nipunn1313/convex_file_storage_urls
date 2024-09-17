@@ -163,6 +163,12 @@ export declare const components: {
         },
         string
       >;
+      serveAction: FunctionReference<
+        "action",
+        "internal",
+        { uuid: string },
+        ArrayBuffer | null
+      >;
     };
     upload: {
       generateUploadUrl: FunctionReference<"mutation", "internal", {}, any>;

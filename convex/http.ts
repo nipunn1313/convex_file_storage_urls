@@ -1,5 +1,5 @@
 import { httpRouter } from "convex/server";
-import { serveAction } from "../file_storage_urls/serve";
+import { serveHttpAction } from "../file_storage_urls/serve";
 import { components } from "./_generated/server";
 
 const http = httpRouter();
@@ -7,7 +7,7 @@ const http = httpRouter();
 http.route({
   path: "/fileStorageUrls/get",
   method: "GET",
-  handler: serveAction(components.fileStorageUrls),
+  handler: serveHttpAction(components.fileStorageUrls),
 });
 
 export default http;

@@ -44,6 +44,12 @@ export type Mounts = {
       },
       string
     >;
+    serveAction: FunctionReference<
+      "action",
+      "public",
+      { uuid: string },
+      ArrayBuffer | null
+    >;
   };
   upload: {
     generateUploadUrl: FunctionReference<"mutation", "public", {}, any>;

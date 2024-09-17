@@ -1,4 +1,5 @@
 import {
+  action,
   httpAction,
   internalMutation,
   internalQuery,
@@ -6,10 +7,10 @@ import {
 } from "./_generated/server";
 import { v4 as uuidv4 } from "uuid";
 import { v } from "convex/values";
-import { api, internal } from "./_generated/api";
+import { internal } from "./_generated/api";
 import { PublicHttpAction } from "convex/server";
 
-export const serveAction = (component: any): PublicHttpAction => {
+export const serveHttpAction = (component: any): PublicHttpAction => {
   return httpAction(async (ctx, request) => {
     const { searchParams } = new URL(request.url);
     const uuid = searchParams.get("uuid");
@@ -18,17 +19,8 @@ export const serveAction = (component: any): PublicHttpAction => {
         status: 400,
       });
     }
-    const storageId = await ctx.runQuery(component.serve.getByUuid, { uuid });
-    if (storageId === null) {
-      // invalid UUID or expired URL
-      return new Response("File Not Found", {
-        status: 404,
-      });
-    }
-    const blob = await ctx.storage.get(storageId);
+    const blob = await ctx.runAction(component.serve.serveAction, { uuid });
     if (blob === null) {
-      // Valid UUID but pointing at nonexistent file
-      console.log(`UUID ${uuid} points at missing file`);
       return new Response("File Not Found", {
         status: 404,
       });
@@ -36,6 +28,27 @@ export const serveAction = (component: any): PublicHttpAction => {
     return new Response(blob);
   });
 };
+
+export const serveAction = action({
+  args: {
+    uuid: v.string(),
+  },
+  returns: v.union(v.bytes(), v.null()),
+  handler: async (ctx, { uuid }): Promise<ArrayBuffer | null> => {
+    const storageId = await ctx.runQuery(internal.serve.getByUuid, { uuid });
+    if (storageId === null) {
+      // invalid UUID or expired URL
+      return null;
+    }
+    const blob = await ctx.storage.get(storageId);
+    if (blob === null) {
+      // Valid UUID but pointing at nonexistent file
+      console.log(`UUID ${uuid} points at missing file`);
+      return null;
+    }
+    return await blob.arrayBuffer();
+  },
+});
 
 export const getByUuid = internalQuery({
   args: {

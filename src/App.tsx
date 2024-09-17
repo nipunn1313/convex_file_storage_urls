@@ -104,8 +104,8 @@ function Image({ message }: { message: { storageId: Id<"_storage"> } }) {
     };
 
     // Fetch the URL initially
-    // fetchUrl();
-  });
+    fetchUrl();
+  }, []);
 
   if (!url) {
     return <div>Image Loading...</div>;
